@@ -32,12 +32,11 @@ from django.template import Template, Context, loader
 #V3
 
 def inicio(request):
-    archivo = open(r'C:\Users\Irina\Desktop\Projectos\My_final_project\Tercera preentrega\tercera_pre_entrega\templates\inicio.html', 'r') 
-   
-    
-    template = Template(archivo.read())
-    archivo.close()
-   
+  #  archivo = open(r'C:\Users\Irina\Desktop\Projectos\My_final_project\Tercera preentrega\templates\inicio.html', 'r') 
+     
+   # template = Template(archivo.read())
+   # archivo.close()
+    template = loader.get_template('inicio.html')
     segundos =datetime.now().second
     diccionario = {
         'mensaje': 'Este es el mensaje de inicio....',
@@ -46,10 +45,11 @@ def inicio(request):
         'segundo_redondo': segundos%10 ==0,
         'listado_de_numeros': list(range(25))
     }
-    contexto = Context(diccionario)
+    #contexto = Context(diccionario)
     
-    renderizar_template = template.render(contexto)
+    #renderizar_template = template.render(contexto)
 
+    renderizar_template = template.render(diccionario)
     return HttpResponse(renderizar_template)
 
 
