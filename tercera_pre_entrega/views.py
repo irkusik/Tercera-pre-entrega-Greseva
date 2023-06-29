@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from datetime import datetime
 from django.template import Template, Context, loader
+from inicio.models import Tiburon, Ballena
 
 # V1
 
@@ -66,3 +67,27 @@ def saludar(request):
 
 def bienvenida(request, nombre):
     return HttpResponse(f'Bienvenido/a {nombre.title()}!!!!')
+
+
+def crear_tiburon(request, tipo, habitat, tomaño, status):
+    template = loader.get_template('crear_tiburon.html')
+    tiburon = Tiburon(tipo=tipo, habitat=habitat, tomaño=tomaño, status=status)
+    tiburon.save()
+    diccionario = {
+        'tiburon': tiburon,
+    }
+    renderizar_template = template.render(diccionario)
+    return HttpResponse(renderizar_template)
+
+
+
+
+def crear_ballena(request, tipo, habitat, tomaño, status):
+    template = loader.get_template('crear_ballena.html')
+    ballena = Ballena(tipo=tipo, habitat=habitat, tomaño=tomaño, status=status)
+    ballena.save()
+    diccionario = {
+        'ballena': ballena,
+    }
+    renderizar_template = template.render(diccionario)
+    return HttpResponse(renderizar_template)
