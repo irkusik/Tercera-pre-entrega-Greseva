@@ -11,4 +11,5 @@ urlpatterns = [
     path ('bienvenida/<str:nombre>/', views.bienvenida),
     path ('crear-tiburon/<str:tipo>/<str:habitat>/<int:tomaño>/<str:status>/', views.crear_tiburon),
     path ('crear-ballena/<str:tipo>/<str:habitat>/<int:tomaño>/<str:status>/', views.crear_ballena), 
+    path ('crear-animal/<str:nombre>/<str:orden>/<str:habitat>/<int:tomaño>/', views.crear_animal)   
 ]

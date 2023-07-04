@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from datetime import datetime
 from django.template import Template, Context, loader
-from inicio.models import Tiburon, Ballena
+from inicio.models import Tiburon, Ballena, Animal
 from django.shortcuts import render
 
 # V1
@@ -124,3 +124,10 @@ def crear_ballena(request, tipo, habitat, tomaño, status):
     }
     return render(request, 'inicio/crear_ballena.html', diccionario)
 
+def crear_animal(request, nombre, orden, habitat, tomaño):
+    animal = Animal(nombre=nombre, orden=orden, habitat=habitat, tomaño=tomaño)
+    animal.save()
+    diccionario = {
+        'animal': animal,
+    }
+    return render(request, 'inicio/crear_animal.html', diccionario)
