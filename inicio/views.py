@@ -1,8 +1,8 @@
 from django.http import HttpResponse
-from datetime import datetime
+#from datetime import datetime
 from django.template import Template, Context, loader
 from inicio.models import Tiburon, Ballena, Animal
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from inicio.form import CrearTiburonFormulario, BuscarTiburonFormulario, CrearBallenaFormulario, BuscarBallenaFormulario, CrearAnimalFormulario, BuscarAnimalFormulario
 
 # V1
@@ -52,37 +52,37 @@ from inicio.form import CrearTiburonFormulario, BuscarTiburonFormulario, CrearBa
 
 #V4
 
-def prueba(request):
+#def prueba(request):
 #    template = loader.get_template('inicio.html')
-    segundos =datetime.now().second
-    diccionario = {
-        'mensaje': 'Este es el mensaje de inicio....',
-        'segundos': segundos,
-        'segundo_par': segundos%2 == 0,
-        'segundo_redondo': segundos%10 ==0,
-        'listado_de_numeros': list(range(25))
-    }
+  #  segundos =datetime.now().second
+ #   diccionario = {
+ #       'mensaje': 'Este es el mensaje de inicio....',
+ #       'segundos': segundos,
+  #      'segundo_par': segundos%2 == 0,
+  #      'segundo_redondo': segundos%10 ==0,
+ #       'listado_de_numeros': list(range(25))
+ #   }
 #    renderizar_template = template.render(diccionario)
 #    return HttpResponse(renderizar_template)
-    return render(request, 'inicio/prueba.html', diccionario)
+#    return render(request, 'inicio/prueba.html', diccionario)
 
 
 def inicio(request):
     return render(request, 'inicio/inicio.html')
 
 
-def segunda_vista(request):
-    return HttpResponse('<h1>Soy la segunda vista!</h1>')
+#def segunda_vista(request):
+#    return HttpResponse('<h1>Soy la segunda vista!</h1>')
 
-def fecha_actual(request):
-    fecha = datetime.now()
-    return HttpResponse(f'<h1>Fecha actual: {fecha}</h1>')
+#def fecha_actual(request):
+#    fecha = datetime.now()
+#    return HttpResponse(f'<h1>Fecha actual: {fecha}</h1>')
 
-def saludar(request):
-    return HttpResponse('Bienvenido/a!!!!')
+#def saludar(request):
+#    return HttpResponse('Bienvenido/a!!!!')
 
-def bienvenida(request, nombre):
-    return HttpResponse(f'Bienvenido/a {nombre.title()}!!!!')
+#def bienvenida(request, nombre):
+#    return HttpResponse(f'Bienvenido/a {nombre.title()}!!!!')
 
 ## V1
 #def crear_tiburon(request, tipo, habitat, tomaño, status):
@@ -181,7 +181,7 @@ def crear_tiburon(request):
            info = formulario.cleaned_data  
            tiburon = Tiburon(tipo=info['tipo'], habitat=info['habitat'], tomaño=info['tomaño'], status=info['status'])
            tiburon.save()
-           return render(request, 'inicio/listar_tiburones.html')
+           return redirect('listar_tiburones')
         else: 
             return render(request, 'inicio/crear_tiburon.html', {'formulario': formulario})
              
@@ -207,7 +207,7 @@ def crear_ballena(request):
            info = formulario.cleaned_data  
            ballena = Ballena(tipo=info['tipo'], habitat=info['habitat'], tomaño=info['tomaño'], status=info['status'])
            ballena.save()
-           return render(request, 'inicio/listar_ballenas.html')
+           return redirect('listar_ballenas')
         else:
            return render(request, 'inicio/crear_ballena.html', {'formulario': formulario}) 
             
@@ -222,7 +222,7 @@ def listar_ballenas(request):
         listado_de_ballenas = Ballena.objects.filter(tipo__icontains=nombre_a_buscar)
     
     formulario = BuscarBallenaFormulario()
-    return render(request, 'inicio/listar_ballenas.html', {'formulario': formulario})
+    return render(request, 'inicio/listar_ballenas.html', {'formulario': formulario, 'ballenas': listado_de_ballenas})
 
 
 
@@ -234,7 +234,7 @@ def crear_animal(request):
             info = formulario.cleaned_data
             animal = Animal(nombre=info['nombre'], orden=info['orden'], habitat=info['habitat'], tomaño=info['tomaño'])
             animal.save()
-            return render(request, 'inicio/listar_animales.html')
+            return redirect('listar_animal')
         else:
             return render(request, 'inicio/crear_animal.html', {'formulario': formulario})            
             
@@ -249,4 +249,4 @@ def listar_animales(request):
         listado_de_animales = Animal.objects.filter(nombre__icontains=nombre_a_buscar)
     
     formulario = BuscarAnimalFormulario()
-    return render(request, 'inicio/listar_animales.html', {'formulario': formulario})
+    return render(request, 'inicio/listar_animales.html', {'formulario': formulario, 'animales': listado_de_animales})

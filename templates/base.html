@@ -23,7 +23,7 @@
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
                 <a class="navbar-brand" href={% url 'inicio' %}>Inicio</a>
-                <a class="navbar-brand" href={% url 'prueba' %}>Prueba</a>
+                {% comment "" %}<a class="navbar-brand" href={% url 'prueba' %}>Prueba</a>{% endcomment %}
                 <a class="navbar-brand" href= {% url 'listar_tiburones' %}>Tiburones </a>
                 <a class="navbar-brand" href={% url 'listar_ballenas' %}>Ballenas</a>
                 <a class="navbar-brand" href={% url 'listar_animales' %}>Animales</a>
