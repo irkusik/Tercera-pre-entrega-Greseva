@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Ballenas</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+{% comment "" %}
+Se creo la ballena de tipo {{ballena.tipo}}, habitat {{ballena.habitat}} , tomaño {{ballena.tomaño}} metros y status de peligro {{ballena.status}}
+{% endcomment %}
+Listado de Ballenas
+{% endblock h1_header %}
+
+{% block contenido %}
+<button>
+    <a class="navbar-brand" href={% url 'crear_ballena' %}>Crear ballena</a>
+</button>
+<form action="" method="get">
+    {{formulario}}
+    <button>Buscar</button>
+</form>
+{% for ballena in ballenas %}
+<li>Tipo: {{ballena.tipo}} - Habitat: {{ballena.habitat}} - Tomaño: {{ballena.tomaño}} metros - Status de peligro: {{ballena.status}}</li>
+{% endfor %}
+{% endblock contenido %}

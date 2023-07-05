@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Tiburones</title>
+{% endblock title_head %}
+
+{% block h1_header %} {% comment "" %}
+Se creo el tiburon de tipo {{tiburon.tipo}}, habitat {{tiburon.habitat}} , tomaño {{tiburon.tomaño}} metros y status de peligro {{tiburon.status}}{% endcomment %}
+Listado de Tiburones
+{% endblock h1_header %}
+
+{% block contenido %}
+<button>
+    <a class="navbar-brand" href= {% url 'crear_tiburon' %}>Crear tiburon </a>
+</button>
+<form action="" method="get">
+    {{formulario}}
+    <button>Buscar</button>
+</form>
+{% for tiburon in tiburones %}
+<li> Tipo: {{tiburon.tipo}} - Habitat: {{tiburon.habitat}} - Tamaño: {{tiburon.tomaño}} metros - Status de peligro: {{tiburon.status}}</li>
+{% endfor %}
+{% endblock contenido %}
+    

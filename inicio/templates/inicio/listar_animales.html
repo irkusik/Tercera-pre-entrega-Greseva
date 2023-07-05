@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Animales</title>
+{% endblock title_head %}
+
+{% block h1_header %} {% comment "" %}
+Se creo el animal de nombre {{animal.nombre}}, de orden {{animal.orden}}, habitat {{animal.habitat}} y tomaño {{animal.tomaño}} kilos 
+{% endcomment %}
+Listado de Animales
+{% endblock h1_header %}
+
+{% block contenido %}
+<button>
+    <a class="navbar-brand" href={% url 'crear_animal' %}>Crear animal</a>
+</button>
+<form action="" method="get">
+    {{formulario}}
+    <button>Buscar</button>
+</form>
+{% for animal in animales %}
+<li>Nombre: {{animal.nombre}} - Orden: {{animal.orden}} - Habitat: {{animal.habitat}} - Tamaño: {{animal.tomaño}} kilos </li>
+{% endfor %}
+{% endblock contenido %}

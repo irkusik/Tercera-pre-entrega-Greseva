@@ -3,6 +3,7 @@ from datetime import datetime
 from django.template import Template, Context, loader
 from inicio.models import Tiburon, Ballena, Animal
 from django.shortcuts import render
+from inicio.form import CrearTiburonFormulario, BuscarTiburonFormulario, CrearBallenaFormulario, BuscarBallenaFormulario, CrearAnimalFormulario, BuscarAnimalFormulario
 
 # V1
 
@@ -107,27 +108,145 @@ def bienvenida(request, nombre):
 
 
 ## V2
-def crear_tiburon(request, tipo, habitat, tomaño, status):
-    tiburon = Tiburon(tipo=tipo, habitat=habitat, tomaño=tomaño, status=status)
-    tiburon.save()
-    diccionario = {
-        'tiburon': tiburon,
-    }
-    return render(request, 'inicio/crear_tiburon.html', diccionario)
+#def crear_tiburon(request, tipo, habitat, tomaño, status):
+#    tiburon = Tiburon(tipo=tipo, habitat=habitat, tomaño=tomaño, status=status)
+#    tiburon.save()
+#    diccionario = {
+#        'tiburon': tiburon,
+#    }
+#    return render(request, 'inicio/crear_tiburon.html', diccionario)
 
 
-def crear_ballena(request, tipo, habitat, tomaño, status):
-    ballena = Ballena(tipo=tipo, habitat=habitat, tomaño=tomaño, status=status)
-    ballena.save()
-    diccionario = {
-        'ballena': ballena,
-    }
-    return render(request, 'inicio/crear_ballena.html', diccionario)
+#def crear_ballena(request, tipo, habitat, tomaño, status):
+#    ballena = Ballena(tipo=tipo, habitat=habitat, tomaño=tomaño, status=status)
+#    ballena.save()
+#    diccionario = {
+#        'ballena': ballena,
+#    }
+#    return render(request, 'inicio/crear_ballena.html', diccionario)
 
-def crear_animal(request, nombre, orden, habitat, tomaño):
-    animal = Animal(nombre=nombre, orden=orden, habitat=habitat, tomaño=tomaño)
-    animal.save()
-    diccionario = {
-        'animal': animal,
-    }
-    return render(request, 'inicio/crear_animal.html', diccionario)
+#def crear_animal(request, nombre, orden, habitat, tomaño):
+#    animal = Animal(nombre=nombre, orden=orden, habitat=habitat, tomaño=tomaño)
+#    animal.save()
+#    diccionario = {
+#        'animal': animal,
+#    }
+#    return render(request, 'inicio/crear_animal.html', diccionario)
+
+## V3 crear
+
+#def crear_tiburon(request):
+#    print(request.POST)
+#    print(request.GET)
+#    diccionario = {}
+    
+#    if request.method == "POST":
+#        tiburon = Tiburon(tipo=request.POST['tipo'], habitat=request.POST['habitat'], tomaño=request.POST['tomaño'], status=request.POST['status'])
+#        tiburon.save()
+        
+#        diccionario ['tiburon'] = tiburon
+        
+#    return render(request, 'inicio/crear_tiburon.html', diccionario)
+
+
+#def crear_ballena(request):
+#    print(request.POST)
+#    print(request.GET)
+#    diccionario = {}
+    
+#    if request.method == "POST":
+#        ballena = Ballena(tipo=request.POST['tipo'], habitat=request.POST['habitat'], tomaño=request.POST['tomaño'], status=request.POST['status'])
+#        ballena.save()
+#        diccionario ['ballena'] = ballena
+#    return render(request, 'inicio/crear_ballena.html', diccionario)
+
+#def crear_animal(request):
+#    print(request.POST)
+#    print(request.GET)
+#    diccionario = {}
+    
+#    if request.method == "POST":
+#        animal = Animal(nombre=request.POST['nombre'], orden=request.POST['orden'], habitat=request.POST['habitat'], tomaño=request.POST['tomaño'])
+#        animal.save()
+#        diccionario ['animal'] = animal
+#    return render(request, 'inicio/crear_animal.html', diccionario)
+
+
+### V4
+def crear_tiburon(request):
+    
+    if request.method == "POST":
+        formulario = CrearTiburonFormulario(request.POST)
+        if formulario.is_valid():
+           info = formulario.cleaned_data  
+           tiburon = Tiburon(tipo=info['tipo'], habitat=info['habitat'], tomaño=info['tomaño'], status=info['status'])
+           tiburon.save()
+           return render(request, 'inicio/listar_tiburones.html')
+        else: 
+            return render(request, 'inicio/crear_tiburon.html', {'formulario': formulario})
+             
+    formulario = CrearTiburonFormulario()
+    return render(request, 'inicio/crear_tiburon.html', {'formulario': formulario})
+
+def listar_tiburones(request):
+    formulario = BuscarTiburonFormulario(request.GET)
+    if formulario.is_valid():
+        nombre_a_buscar = formulario.cleaned_data['tipo']
+        listado_de_tiburones = Tiburon.objects.filter(tipo__icontains=nombre_a_buscar)
+    
+    formulario = BuscarTiburonFormulario()
+    return render(request, 'inicio/listar_tiburones.html', {'formulario': formulario, 'tiburones': listado_de_tiburones})
+
+
+
+def crear_ballena(request):
+    
+    if request.method == "POST":
+        formulario = CrearBallenaFormulario(request.POST)
+        if formulario.is_valid():
+           info = formulario.cleaned_data  
+           ballena = Ballena(tipo=info['tipo'], habitat=info['habitat'], tomaño=info['tomaño'], status=info['status'])
+           ballena.save()
+           return render(request, 'inicio/listar_ballenas.html')
+        else:
+           return render(request, 'inicio/crear_ballena.html', {'formulario': formulario}) 
+            
+            
+    formulario = CrearBallenaFormulario()    
+    return render(request, 'inicio/crear_ballena.html', {'formulario': formulario})
+
+def listar_ballenas(request):
+    formulario = BuscarBallenaFormulario(request.GET)
+    if formulario.is_valid():
+        nombre_a_buscar = formulario.cleaned_data['tipo']
+        listado_de_ballenas = Ballena.objects.filter(tipo__icontains=nombre_a_buscar)
+    
+    formulario = BuscarBallenaFormulario()
+    return render(request, 'inicio/listar_ballenas.html', {'formulario': formulario})
+
+
+
+def crear_animal(request):
+
+    if request.method == "POST":
+        formulario = CrearAnimalFormulario(request.POST)
+        if formulario.is_valid():
+            info = formulario.cleaned_data
+            animal = Animal(nombre=info['nombre'], orden=info['orden'], habitat=info['habitat'], tomaño=info['tomaño'])
+            animal.save()
+            return render(request, 'inicio/listar_animales.html')
+        else:
+            return render(request, 'inicio/crear_animal.html', {'formulario': formulario})            
+            
+            
+    formulario = CrearAnimalFormulario()        
+    return render(request, 'inicio/crear_animal.html', {'formulario': formulario})
+
+def listar_animales(request):
+    formulario = BuscarAnimalFormulario(request.GET)
+    if formulario.is_valid():
+        nombre_a_buscar = formulario.cleaned_data['nombre']
+        listado_de_animales = Animal.objects.filter(nombre__icontains=nombre_a_buscar)
+    
+    formulario = BuscarAnimalFormulario()
+    return render(request, 'inicio/listar_animales.html', {'formulario': formulario})

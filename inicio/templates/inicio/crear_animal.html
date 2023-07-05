@@ -1,11 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h2>Se creo un animal de nombre {{animal.nombre}}, de orden {{animal.orden}}, habitat {{animal.habitat}} y tomaño {{animal.tomaño}} kilos </h2>    
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Crear Animal</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+Crear Animal Marino
+{% endblock h1_header %}
+
+{% block contenido %}
+{% comment "" %}{% if animal %}
+<h2>Se creo el animal de nombre {{animal.nombre}}, de orden {{animal.orden}}, habitat {{animal.habitat}} y tomaño {{animal.tomaño}} kilos </h2>
+{% endif %} {% endcomment %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {% comment "" %}<p>
+        Nombre:
+        <input type="text" name="nombre">
+    </p>
+    <p>
+        Orden:
+        <input type="text" name="orden">
+    </p>
+    <p>
+        Habitat:
+        <input type="text" name="habitat">
+    </p>
+    <p>
+        Tamaño:
+        <input type="number" name="tomaño">
+    </p> {% endcomment %}
+
+    {{formulario}}
+    <button>Crear</button>
+</form>
+{% endblock contenido %}
+   

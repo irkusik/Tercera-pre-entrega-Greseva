@@ -1,13 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h2>Se creo un tiburon de tipo {{tiburon.tipo}}, habitat {{tiburon.habitat}} , tomaño {{tiburon.tomaño}} metros y status de peligro {{tiburon.status}} </h2> 
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Crear Tiburon</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+Crear Tiburon
+{% endblock h1_header %}
+
+{% block contenido %}
+{% comment "" %}{% if tiburon %}
+<h2>Se creo el tiburon de tipo {{tiburon.tipo}}, habitat {{tiburon.habitat}} , tomaño {{tiburon.tomaño}} metros y status de peligro {{tiburon.status}} </h2>
+{% endif %}{% endcomment %}
+<form action="" method="POST">
+    {% csrf_token %}
 
 
+{% comment "" %} V1 {% endcomment %}
+
+   {% comment "" %} <p>
+        Tipo:
+        <input type="text" name="tipo">
+    </p>
+    <p>
+        Habitat:
+        <input type="text" name="habitat">
+    </p>
+    <p>
+        Tamaño:
+        <input type="number" name="tomaño">
+    </p>
+    <p>
+        Status:
+        <input type="text" name="status">
+    </p>{% endcomment %}
+{% comment "" %} V2 {% endcomment %}
+
+    {{formulario}}
+
+    <input type="submit" value="Crear">
+</form>
+{% endblock contenido %}
+    
