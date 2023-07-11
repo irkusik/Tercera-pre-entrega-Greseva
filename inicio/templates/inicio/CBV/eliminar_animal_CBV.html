@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Eliminar Animal</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+Eliminar Animal
+{% endblock h1_header %}
+
+{% block contenido %}
+
+<form action={% url 'eliminar_animal' animal.id %} method="POST">
+    {% csrf_token %}
+    <p>Confirma el borrado de {{animal}} </p>
+    <input type="submit" value="Confirmar">
+</form>
+{% endblock contenido %}

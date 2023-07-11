@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Animal</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+{{animal.nombre}}
+{% endblock h1_header%}
+
+{% block contenido %} 
+<li>Orden: {{animal.orden}}</li>
+<li>Habitat: {{animal.habitat}}</li>
+<li>Tomaño: {{animal.tomaño}}</li>
+<li>Descripcion: {{animal.descripcion}} </li>
+{% endblock contenido %}

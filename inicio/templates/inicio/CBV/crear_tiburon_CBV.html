@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Crear Tiburon</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+Crear Tiburon
+{% endblock h1_header %}
+
+{% block contenido %}
+
+<form action={% url 'crear_tiburon' %} method="POST">
+    {% csrf_token %}
+    
+<table>
+    {{form}}
+</table>
+    <input type="submit" value="Crear">
+</form>
+{% endblock contenido %}
+    

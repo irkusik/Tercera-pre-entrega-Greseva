@@ -3,7 +3,12 @@ from django.http import HttpResponse
 from django.template import Template, Context, loader
 from inicio.models import Tiburon, Ballena, Animal
 from django.shortcuts import render, redirect
-from inicio.form import CrearTiburonFormulario, BuscarTiburonFormulario, CrearBallenaFormulario, BuscarBallenaFormulario, CrearAnimalFormulario, BuscarAnimalFormulario
+from inicio.form import CrearTiburonFormulario, BuscarTiburonFormulario, ModificarTiburonFormulario, CrearBallenaFormulario, BuscarBallenaFormulario, ModificarBallenaFormulario, CrearAnimalFormulario, BuscarAnimalFormulario,ModificarAnimalFormulario
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.urls import reverse_lazy
+
 
 # V1
 
@@ -173,80 +178,252 @@ def inicio(request):
 
 
 ### V4
-def crear_tiburon(request):
+#def crear_tiburon(request):
     
-    if request.method == "POST":
-        formulario = CrearTiburonFormulario(request.POST)
-        if formulario.is_valid():
-           info = formulario.cleaned_data  
-           tiburon = Tiburon(tipo=info['tipo'], habitat=info['habitat'], tomaño=info['tomaño'], status=info['status'])
-           tiburon.save()
-           return redirect('listar_tiburones')
-        else: 
-            return render(request, 'inicio/crear_tiburon.html', {'formulario': formulario})
+#    if request.method == "POST":
+#        formulario = CrearTiburonFormulario(request.POST)
+#        if formulario.is_valid():
+#           info = formulario.cleaned_data  
+#           tiburon = Tiburon(tipo=info['tipo'], habitat=info['habitat'], tomaño=info['tomaño'], status=info['status'])
+#           tiburon.save()
+#           return redirect('listar_tiburones')
+#        else: 
+#            return render(request, 'inicio/crear_tiburon.html', {'formulario': formulario})
              
-    formulario = CrearTiburonFormulario()
-    return render(request, 'inicio/crear_tiburon.html', {'formulario': formulario})
+#    formulario = CrearTiburonFormulario()
+#    return render(request, 'inicio/crear_tiburon.html', {'formulario': formulario})
 
-def listar_tiburones(request):
-    formulario = BuscarTiburonFormulario(request.GET)
-    if formulario.is_valid():
-        nombre_a_buscar = formulario.cleaned_data['tipo']
-        listado_de_tiburones = Tiburon.objects.filter(tipo__icontains=nombre_a_buscar)
+#def listar_tiburones(request):
+#    formulario = BuscarTiburonFormulario(request.GET)
+#    if formulario.is_valid():
+#        nombre_a_buscar = formulario.cleaned_data['tipo']
+#        listado_de_tiburones = Tiburon.objects.filter(tipo__icontains=nombre_a_buscar)
     
-    formulario = BuscarTiburonFormulario()
-    return render(request, 'inicio/listar_tiburones.html', {'formulario': formulario, 'tiburones': listado_de_tiburones})
+#    formulario = BuscarTiburonFormulario()
+#    return render(request, 'inicio/listar_tiburones.html', {'formulario': formulario, 'tiburones': listado_de_tiburones})
 
+#def eliminar_tiburon(request, tiburon_id):
+#    tiburon = Tiburon.objects.get(id=tiburon_id)
+#    tiburon.delete()
+#    return redirect('listar_tiburones')
 
-
-def crear_ballena(request):
+#def modificar_tiburon(request, tiburon_id):
+#    tiburon_a_modificar = Tiburon.objects.get(id=tiburon_id)
     
-    if request.method == "POST":
-        formulario = CrearBallenaFormulario(request.POST)
-        if formulario.is_valid():
-           info = formulario.cleaned_data  
-           ballena = Ballena(tipo=info['tipo'], habitat=info['habitat'], tomaño=info['tomaño'], status=info['status'])
-           ballena.save()
-           return redirect('listar_ballenas')
-        else:
-           return render(request, 'inicio/crear_ballena.html', {'formulario': formulario}) 
+#    if request.method == 'POST':
+#        formulario = ModificarTiburonFormulario(request.POST)
+#        if formulario.is_valid():
+#            info = formulario.cleaned_data
+#            tiburon_a_modificar.tipo = info['tipo']
+#            tiburon_a_modificar.habitat= info['habitat']
+#            tiburon_a_modificar.tomaño= info['tomaño']
+#            tiburon_a_modificar.status= info['status']
+#            tiburon_a_modificar.save()
+#            return redirect('listar_tiburones')
+#        else:
+#            return render(request,'inicio/modificar_tiburon.html', {'formulario': formulario})
+        
+        
+#    formulario = ModificarTiburonFormulario(initial={'tipo': tiburon_a_modificar.tipo, 'habitat': tiburon_a_modificar.habitat, 'tomaño': tiburon_a_modificar.tomaño, 'status': tiburon_a_modificar.status})
+    
+#    return render(request,'inicio/modificar_tiburon.html', {'formulario': formulario})
+
+
+#=======================================================================================
+
+
+
+#def crear_ballena(request):
+    
+#    if request.method == "POST":
+#        formulario = CrearBallenaFormulario(request.POST)
+#        if formulario.is_valid():
+#           info = formulario.cleaned_data  
+#           ballena = Ballena(tipo=info['tipo'], habitat=info['habitat'], tomaño=info['tomaño'], status=info['status'])
+#           ballena.save()
+#           return redirect('listar_ballenas')
+#        else:
+#           return render(request, 'inicio/crear_ballena.html', {'formulario': formulario}) 
             
             
-    formulario = CrearBallenaFormulario()    
-    return render(request, 'inicio/crear_ballena.html', {'formulario': formulario})
+#    formulario = CrearBallenaFormulario()    
+#    return render(request, 'inicio/crear_ballena.html', {'formulario': formulario})
 
-def listar_ballenas(request):
-    formulario = BuscarBallenaFormulario(request.GET)
-    if formulario.is_valid():
-        nombre_a_buscar = formulario.cleaned_data['tipo']
-        listado_de_ballenas = Ballena.objects.filter(tipo__icontains=nombre_a_buscar)
+#def listar_ballenas(request):
+#    formulario = BuscarBallenaFormulario(request.GET)
+#    if formulario.is_valid():
+#        nombre_a_buscar = formulario.cleaned_data['tipo']
+#        listado_de_ballenas = Ballena.objects.filter(tipo__icontains=nombre_a_buscar)
     
-    formulario = BuscarBallenaFormulario()
-    return render(request, 'inicio/listar_ballenas.html', {'formulario': formulario, 'ballenas': listado_de_ballenas})
+#    formulario = BuscarBallenaFormulario()
+#    return render(request, 'inicio/listar_ballenas.html', {'formulario': formulario, 'ballenas': listado_de_ballenas})
+
+#def eliminar_ballena(request, ballena_id):
+#    ballena = Ballena.objects.get(id=ballena_id)
+#    ballena.delete()
+#    return redirect('listar_ballenas')
 
 
+#def modificar_ballena(request, ballena_id):
+#    ballena_a_modificar = Ballena.objects.get(id=ballena_id)
+    
+#    if request.method == 'POST':
+#        formulario = ModificarBallenaFormulario(request.POST)
+#        if formulario.is_valid():
+#            info = formulario.cleaned_data
+#            ballena_a_modificar.tipo = info['tipo']
+#            ballena_a_modificar.habitat= info['habitat']
+#            ballena_a_modificar.tomaño= info['tomaño']
+#            ballena_a_modificar.status= info['status']
+#            ballena_a_modificar.save()
+#            return redirect('listar_ballenas')
+#        else:
+#            return render(request,'inicio/modificar_ballena.html', {'formulario': formulario})
+        
+        
+#    formulario = ModificarBallenaFormulario(initial={'tipo': ballena_a_modificar.tipo, 'habitat': ballena_a_modificar.habitat, 'tomaño': ballena_a_modificar.tomaño, 'status': ballena_a_modificar.status})
+    
+#    return render(request,'inicio/modificar_ballena.html', {'formulario': formulario})
 
-def crear_animal(request):
 
-    if request.method == "POST":
-        formulario = CrearAnimalFormulario(request.POST)
-        if formulario.is_valid():
-            info = formulario.cleaned_data
-            animal = Animal(nombre=info['nombre'], orden=info['orden'], habitat=info['habitat'], tomaño=info['tomaño'])
-            animal.save()
-            return redirect('listar_animal')
-        else:
-            return render(request, 'inicio/crear_animal.html', {'formulario': formulario})            
+#=======================================================================================================
+
+#def crear_animal(request):
+
+#    if request.method == "POST":
+#        formulario = CrearAnimalFormulario(request.POST)
+#        if formulario.is_valid():
+#            info = formulario.cleaned_data
+#            animal = Animal(nombre=info['nombre'], orden=info['orden'], habitat=info['habitat'], tomaño=info['tomaño'])
+#            animal.save()
+#            return redirect('listar_animal')
+#        else:
+#            return render(request, 'inicio/crear_animal.html', {'formulario': formulario})            
             
             
-    formulario = CrearAnimalFormulario()        
-    return render(request, 'inicio/crear_animal.html', {'formulario': formulario})
+#    formulario = CrearAnimalFormulario()        
+#    return render(request, 'inicio/crear_animal.html', {'formulario': formulario})
 
-def listar_animales(request):
-    formulario = BuscarAnimalFormulario(request.GET)
-    if formulario.is_valid():
-        nombre_a_buscar = formulario.cleaned_data['nombre']
-        listado_de_animales = Animal.objects.filter(nombre__icontains=nombre_a_buscar)
+#def listar_animales(request):
+#    formulario = BuscarAnimalFormulario(request.GET)
+#    if formulario.is_valid():
+#        nombre_a_buscar = formulario.cleaned_data['nombre']
+#        listado_de_animales = Animal.objects.filter(nombre__icontains=nombre_a_buscar)
     
-    formulario = BuscarAnimalFormulario()
-    return render(request, 'inicio/listar_animales.html', {'formulario': formulario, 'animales': listado_de_animales})
+#    formulario = BuscarAnimalFormulario()
+#    return render(request, 'inicio/listar_animales.html', {'formulario': formulario, 'animales': listado_de_animales})
+
+#def eliminar_animal(request, animal_id):
+#    animal = Animal.objects.get(id=animal_id)
+#    animal.delete()
+#    return redirect('listar_animales')
+
+
+#def modificar_animal(request, animal_id):
+#    animal_a_modificar = Animal.objects.get(id=animal_id)
+    
+#    if request.method == 'POST':
+#        formulario = ModificarAnimalFormulario(request.POST)
+#        if formulario.is_valid():
+#            info = formulario.cleaned_data
+#            animal_a_modificar.nombre = info['nombre']
+#            animal_a_modificar.habitat= info['orden']
+#            animal_a_modificar.habitat= info['habitat']
+#            animal_a_modificar.tomaño= info['tomaño']
+#            animal_a_modificar.save()
+#            return redirect('listar_animales')
+#        else:
+#            return render(request,'inicio/modificar_animal.html', {'formulario': formulario})
+        
+        
+#    formulario = ModificarAnimalFormulario(initial={'nombre': animal_a_modificar.nombre, 'orden': animal_a_modificar.orden, 'habitat': animal_a_modificar.habitat, 'tomaño': animal_a_modificar.tomaño})
+    
+#    return render(request,'inicio/modificar_animal.html', {'formulario': formulario})
+
+
+class CrearTiburon(CreateView):
+    model = Tiburon
+    template_name = 'inicio/CBV/crear_tiburon_CBV.html'
+    fields =['tipo', 'habitat', 'tomaño', 'status', 'descripcion']
+    success_url = reverse_lazy('listar_tiburones')
+    
+
+class ListarTiburones(ListView):
+    model = Tiburon
+    template_name = "inicio/CBV/listar_tiburones_CBV.html"
+    context_object_name = 'tiburones'
+    
+    
+class ModificarTiburon(UpdateView):
+    model = Tiburon
+    template_name = "inicio/CBV/modificar_tiburon_CBV.html"
+    fields =['tipo', 'habitat', 'tomaño', 'status', 'descripcion']
+    success_url = reverse_lazy('listar_tiburones')
+    
+class EliminarTiburon(DeleteView):
+    model = Tiburon
+    template_name = "inicio/CBV/eliminar_tiburon_CBV.html"
+    success_url = reverse_lazy('listar_tiburones')
+    
+class MostrarTiburon(DeleteView):
+    model = Tiburon
+    template_name = "inicio/CBV/mostrar_tiburon_CBV.html"
+
+#=========================================================================  
+    
+class CrearBallena(CreateView):
+    model = Ballena
+    template_name = 'inicio/CBV/crear_ballena_CBV.html'
+    fields =['tipo', 'habitat', 'tomaño', 'status', 'descripcion']
+    success_url = reverse_lazy('listar_ballenas')
+    
+
+class ListarBallenas(ListView):
+    model = Ballena
+    template_name = "inicio/CBV/listar_ballenas_CBV.html"
+    context_object_name = 'ballenas'
+    
+    
+class ModificarBallena(UpdateView):
+    model = Ballena
+    template_name = "inicio/CBV/modificar_ballena_CBV.html"
+    fields =['tipo', 'habitat', 'tomaño', 'status', 'descripcion']
+    success_url = reverse_lazy('listar_ballenas')
+    
+class EliminarBallena(DeleteView):
+    model = Ballena
+    template_name = "inicio/CBV/eliminar_ballena_CBV.html"
+    success_url = reverse_lazy('listar_ballenas')
+    
+class MostrarBallena(DeleteView):
+    model = Ballena
+    template_name = "inicio/CBV/mostrar_ballena_CBV.html"
+
+#==========================================================================
+class CrearAnimal(CreateView):
+    model = Animal
+    template_name = 'inicio/CBV/crear_animal_CBV.html'
+    fields =['nombre', 'orden', 'habitat', 'tomaño', 'descripcion']
+    success_url = reverse_lazy('listar_animales')
+    
+
+class ListarAnimales(ListView):
+    model = Animal
+    template_name = "inicio/CBV/listar_animales_CBV.html"
+    context_object_name = 'animales'
+    
+    
+class ModificarAnimal(UpdateView):
+    model = Animal
+    template_name = "inicio/CBV/modificar_animal_CBV.html"
+    fields =['nombre', 'orden', 'habitat', 'tomaño', 'descripcion']
+    success_url = reverse_lazy('listar_animales')
+    
+class EliminarAnimal(DeleteView):
+    model = Animal
+    template_name = "inicio/CBV/eliminar_animal_CBV.html"
+    success_url = reverse_lazy('listar_animales')
+    
+class MostrarAnimal(DeleteView):
+    model = Animal
+    template_name = "inicio/CBV/mostrar_animal_CBV.html"

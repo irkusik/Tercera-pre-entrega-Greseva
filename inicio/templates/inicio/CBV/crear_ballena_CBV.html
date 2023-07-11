@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Crear Ballena</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+Crear Ballena
+{% endblock h1_header %}
+
+{% block contenido %}
+
+<form action={% url 'crear_ballena' %} method="POST">
+    {% csrf_token %}
+    
+<table>
+    {{form}}
+</table>
+    <input type="submit" value="Crear">
+</form>
+{% endblock contenido %}

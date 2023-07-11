@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Ballena</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+{{ballena.tipo}}
+{% endblock h1_header%}
+
+{% block contenido %} 
+<li>Habitat: {{ballena.habitat}}</li>
+<li>Tomaño: {{ballena.tomaño}}</li>
+<li>Status: {{ballena.status}}</li>
+<li>Descripcion: {{ballena.descripcion}} </li>
+{% endblock contenido %}

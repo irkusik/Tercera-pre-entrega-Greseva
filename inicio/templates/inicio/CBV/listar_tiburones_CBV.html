@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Tiburones</title>
+{% endblock title_head %}
+
+{% block h1_header %} 
+Listado de Tiburones
+{% endblock h1_header %}
+
+{% block contenido %}
+<button>
+    <a class="navbar-brand" href= {% url 'crear_tiburon' %}>Crear tiburon </a>
+</button>
+{% comment "" %}<form action="" method="get">
+    {{formulario}}
+    <button>Buscar</button>
+</form>{% endcomment %}
+
+{% for tiburon in tiburones %}
+<li>{{tiburon}}
+    <button>
+        <a class="navbar-brand" href= {% url 'mostrar_tiburon' tiburon.id %}>Ver mas</a>
+    </button>
+    <button>
+        <a class="navbar-brand" href= {% url 'modificar_tiburon' tiburon.id %}>Modificar</a>
+    </button>
+    <button>
+        <a class="navbar-brand" href= {% url 'eliminar_tiburon' tiburon.id %}>Eliminar</a>
+    </button>
+    
+</li>
+{% endfor %}
+{% endblock contenido %}
+    

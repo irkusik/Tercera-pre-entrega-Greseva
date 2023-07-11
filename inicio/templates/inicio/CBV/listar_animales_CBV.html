@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Animales</title>
+{% endblock title_head %}
+
+{% block h1_header %} 
+Listado de Animales
+{% endblock h1_header %}
+
+{% block contenido %}
+<button>
+    <a class="navbar-brand" href= {% url 'crear_animal' %}>Crear animal </a>
+</button>
+{% comment "" %}<form action="" method="get">
+    {{formulario}}
+    <button>Buscar</button>
+</form>{% endcomment %}
+
+{% for animal in animales %}
+<li>{{animal}}
+    <button>
+        <a class="navbar-brand" href= {% url 'mostrar_animal' animal.id %}>Ver mas</a>
+    </button>
+    <button>
+        <a class="navbar-brand" href= {% url 'modificar_animal' animal.id %}>Modificar</a>
+    </button>
+    <button>
+        <a class="navbar-brand" href= {% url 'eliminar_animal' animal.id %}>Eliminar</a>
+    </button>
+</li>
+{% endfor %}
+{% endblock contenido %}

@@ -18,7 +18,11 @@ Listado de Tiburones
     <button>Buscar</button>
 </form>
 {% for tiburon in tiburones %}
-<li> Tipo: {{tiburon.tipo}} - Habitat: {{tiburon.habitat}} - Tamaño: {{tiburon.tomaño}} metros - Status de peligro: {{tiburon.status}}</li>
+{% comment "" %}<li> Tipo: {{tiburon.tipo}} - Habitat: {{tiburon.habitat}} - Tamaño: {{tiburon.tomaño}} metros - Status de peligro: {{tiburon.status}}</li>{% endcomment %}
+<li>{{tiburon}}
+    <a href= {% url 'eliminar_tiburon' tiburon.id %}>Eliminar</a>
+    <a href= {% url 'modificar_tiburon' tiburon.id %}>Modificar</a>
+</li>
 {% endfor %}
 {% endblock contenido %}
     

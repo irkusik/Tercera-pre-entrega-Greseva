@@ -1,0 +1,23 @@
+
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Modificar Tiburon</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+Modificar Tiburon
+{% endblock h1_header %}
+
+{% block contenido %}
+
+<form action= {% url 'modificar_tiburon' tiburon.id %} method="POST">
+    {% csrf_token %}
+    
+<table>
+    {{form}}
+</table>
+    
+    <input type="submit" value="Modificar">
+</form>
+{% endblock contenido %}

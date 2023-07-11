@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Tiburon</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+{{tiburon.tipo}}
+{% endblock h1_header%}
+
+{% block contenido %} 
+<li>Habitat: {{tiburon.habitat}}</li>
+<li>Tomaño: {{tiburon.tomaño}}</li>
+<li>Status: {{tiburon.status}}</li>
+<li>Descripcion: {{tiburon.descripcion}} </li>
+{% endblock contenido %}

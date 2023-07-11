@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Eliminar Ballena</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+Eliminar Ballena
+{% endblock h1_header %}
+
+{% block contenido %}
+
+<form action={% url 'eliminar_ballena' ballena.id %} method="POST">
+    {% csrf_token %}
+    <p>Confirma el borrado de {{ballena}} </p>
+    <input type="submit" value="Confirmar">
+</form>
+{% endblock contenido %}

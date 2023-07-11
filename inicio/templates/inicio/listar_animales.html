@@ -19,6 +19,10 @@ Listado de Animales
     <button>Buscar</button>
 </form>
 {% for animal in animales %}
-<li>Nombre: {{animal.nombre}} - Orden: {{animal.orden}} - Habitat: {{animal.habitat}} - Tamaño: {{animal.tomaño}} kilos </li>
+<li>{{animal}}
+    <a href= {% url 'eliminar_animal' animal.id %}>Eliminar</a>
+    <a href= {% url 'modificar_animal' animal.id %}>Modificar</a>
+</li>
+{% comment "" %}<li>Nombre: {{animal.nombre}} - Orden: {{animal.orden}} - Habitat: {{animal.habitat}} - Tamaño: {{animal.tomaño}} kilos </li>{% endcomment %}
 {% endfor %}
 {% endblock contenido %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Eliminar Tiburon</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+Eliminar Tiburon
+{% endblock h1_header %}
+
+{% block contenido %}
+
+<form action={% url 'eliminar_tiburon' tiburon.id %} method="POST">
+    {% csrf_token %}
+    <p>Confirma el borrado de {{tiburon}} </p>
+    <input type="submit" value="Confirmar">
+</form>
+{% endblock contenido %}
