@@ -427,3 +427,5 @@ class EliminarAnimal(DeleteView):
 class MostrarAnimal(DeleteView):
     model = Animal
     template_name = "inicio/CBV/mostrar_animal_CBV.html"
+    
+    
