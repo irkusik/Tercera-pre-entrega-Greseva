@@ -8,7 +8,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # V1
 
@@ -56,7 +57,7 @@ from django.urls import reverse_lazy
 
 
 #V4
-
+#@login_required
 #def prueba(request):
 #    template = loader.get_template('inicio.html')
   #  segundos =datetime.now().second
@@ -360,7 +361,7 @@ class ModificarTiburon(UpdateView):
     fields =['tipo', 'habitat', 'tomaño', 'status', 'descripcion']
     success_url = reverse_lazy('listar_tiburones')
     
-class EliminarTiburon(DeleteView):
+class EliminarTiburon(LoginRequiredMixin, DeleteView):
     model = Tiburon
     template_name = "inicio/CBV/eliminar_tiburon_CBV.html"
     success_url = reverse_lazy('listar_tiburones')
@@ -390,7 +391,7 @@ class ModificarBallena(UpdateView):
     fields =['tipo', 'habitat', 'tomaño', 'status', 'descripcion']
     success_url = reverse_lazy('listar_ballenas')
     
-class EliminarBallena(DeleteView):
+class EliminarBallena(LoginRequiredMixin, DeleteView):
     model = Ballena
     template_name = "inicio/CBV/eliminar_ballena_CBV.html"
     success_url = reverse_lazy('listar_ballenas')
@@ -419,7 +420,7 @@ class ModificarAnimal(UpdateView):
     fields =['nombre', 'orden', 'habitat', 'tomaño', 'descripcion']
     success_url = reverse_lazy('listar_animales')
     
-class EliminarAnimal(DeleteView):
+class EliminarAnimal(LoginRequiredMixin, DeleteView):
     model = Animal
     template_name = "inicio/CBV/eliminar_animal_CBV.html"
     success_url = reverse_lazy('listar_animales')
