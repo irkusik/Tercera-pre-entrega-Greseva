@@ -16,18 +16,25 @@ Listado de Animales
     {{formulario}}
     <button>Buscar</button>
 </form>{% endcomment %}
-
-{% for animal in animales %}
-<li>{{animal}}
+{% if animales %}
+{% for animal in animales  %}
+<li>
+    {{ animal.nombre }} - {{ animal.orden }} - {{ animal.habitat}} - {{ animal.tomaño }}
+    {% if animal.avatar %}
+    <img src="{{ animal.avatar.url }}" alt="{{ animal.nombre }}" height="40px">
+    {% else %}
+    No avatar
+    {% endif %}
     <button>
-        <a class="navbar-brand" href= {% url 'mostrar_animal' animal.id %}>Ver mas</a>
+        <a class="navbar-brand" href="{% url 'mostrar_animal' animal.id %}">Ver mas</a>
     </button>
     <button>
-        <a class="navbar-brand" href= {% url 'modificar_animal' animal.id %}>Modificar</a>
+        <a class="navbar-brand" href="{% url 'modificar_animal' animal.id %}">Modificar</a>
     </button>
     <button>
-        <a class="navbar-brand" href= {% url 'eliminar_animal' animal.id %}>Eliminar</a>
+        <a class="navbar-brand" href="{% url 'eliminar_animal' animal.id %}">Eliminar</a>
     </button>
 </li>
 {% endfor %}
+{% endif %}
 {% endblock contenido %}

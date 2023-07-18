@@ -12,23 +12,28 @@ Listado de Ballenas
 <button>
     <a class="navbar-brand" href= {% url 'crear_ballena' %}>Crear ballena </a>
 </button>
-{% comment "" %}<form action="" method="get">
-    {{formulario}}
-    <button>Buscar</button>
-</form>{% endcomment %}
-
-{% for ballena in ballenas %}
-<li>{{ballena}}
+{% if ballenas %}
+{% for ballena in ballenas  %}
+<li>
+    {{ ballena.tipo }} - {{ ballena.habitat }} - {{ ballena.tomaño}} - {{ ballena.status }}
+    {% if ballena.avatar %}
+    <img src="{{ ballena.avatar.url }}" alt="{{ ballena.tipo }}" height="40px">
+    {% else %}
+    No avatar
+    {% endif %}
     <button>
-        <a class="navbar-brand" href= {% url 'mostrar_ballena' ballena.id %}>Ver mas</a>
+        <a class="navbar-brand" href="{% url 'mostrar_ballena' ballena.id %}">Ver mas</a>
     </button>
     <button>
-        <a class="navbar-brand" href= {% url 'modificar_ballena' ballena.id %}>Modificar</a>
+        <a class="navbar-brand" href="{% url 'modificar_ballena' ballena.id %}">Modificar</a>
     </button>
     <button>
-        <a class="navbar-brand" href= {% url 'eliminar_ballena' ballena.id %}>Eliminar</a>
+        <a class="navbar-brand" href="{% url 'eliminar_ballena' ballena.id %}">Eliminar</a>
     </button>
 </li>
+
+
 {% endfor %}
+{% endif %}
 {% endblock contenido %}
     

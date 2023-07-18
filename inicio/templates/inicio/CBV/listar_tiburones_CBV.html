@@ -17,6 +17,26 @@ Listado de Tiburones
     <button>Buscar</button>
 </form>{% endcomment %}
 
+{% if tiburones %}
+{% for tiburon in tiburones  %}
+<li>
+    {{ tiburon.tipo }} - {{ tiburon.habitat }} - {{ tiburon.tomaño}} - {{ tiburon.status }}
+    {% if tiburon.avatar %}
+    <img src="{{ tiburon.avatar.url }}" alt="{{ tiburon.tipo }}" height="40px">
+    {% else %}
+    No avatar
+    {% endif %}
+    <button>
+        <a class="navbar-brand" href="{% url 'mostrar_tiburon' tiburon.id %}">Ver mas</a>
+    </button>
+    <button>
+        <a class="navbar-brand" href="{% url 'modificar_tiburon' tiburon.id %}">Modificar</a>
+    </button>
+    <button>
+        <a class="navbar-brand" href="{% url 'eliminar_tiburon' tiburon.id %}">Eliminar</a>
+    </button>
+</li>
+{% comment "" %}
 {% for tiburon in tiburones %}
 <li>{{tiburon}}
     <button>
@@ -30,6 +50,8 @@ Listado de Tiburones
     </button>
     
 </li>
+{% endcomment %}
 {% endfor %}
+{% endif %}
 {% endblock contenido %}
     

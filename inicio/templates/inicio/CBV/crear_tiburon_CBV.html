@@ -9,7 +9,18 @@ Crear Tiburon
 {% endblock h1_header %}
 
 {% block contenido %}
+<form action= {% url 'crear_tiburon' %} method="POST"enctype='multipart/form-data'> 
+    {% csrf_token %}
 
+    <table>
+     {{form.as_table }}
+    </table>
+    
+    <button>Crear</button>
+</form>
+
+
+{% comment "" %}
 <form action={% url 'crear_tiburon' %} method="POST">
     {% csrf_token %}
     
@@ -18,5 +29,8 @@ Crear Tiburon
 </table>
     <input type="submit" value="Crear">
 </form>
+{% endcomment %}
+
+
 {% endblock contenido %}
     

@@ -1,0 +1,38 @@
+
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>About</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+¡Bienvenido a la página de acerca de mi proyecto!
+{% endblock h1_header%}
+
+{% block contenido %}
+<h3>Descripción del Proyecto</h3>
+
+<p>
+Este proyecto es una aplicación web desarrollada en Django que permite gestionar información sobre animales marinos, como tiburones, ballenas y otros animales. Los usuarios pueden crear, buscar y listar diferentes tipos de animales marinos, proporcionando información como el tipo, hábitat, tamaño y estado de peligro.</p>
+    
+<h5>Características:</h5>
+
+<h6>Creación de tiburones:</h6>   
+
+<p>Los usuarios pueden crear nuevos registros de tiburones proporcionando información detallada, como el tipo, hábitat, tamaño y estado de peligro.
+    Listado de tiburones: Se muestra un listado de tiburones existentes, con la posibilidad de buscar por tipo de tiburón.</p>
+    
+<h6>Creación de ballenas:</h6>  
+
+<p> Los usuarios pueden crear nuevos registros de ballenas proporcionando información detallada, como el tipo, hábitat, tamaño y estado de peligro.
+    Listado de ballenas: Se muestra un listado de ballenas existentes, con la posibilidad de buscar por tipo de ballena.</p>
+ 
+<h6>Creación de otros animales: </h6>
+
+<p>Los usuarios también pueden crear registros de otros animales marinos proporcionando información como el nombre, orden, hábitat y tamaño.
+    Listado de animales: Se muestra un listado de animales marinos existentes, con la posibilidad de buscar por nombre de animal.</p>   
+    
+{% endblock contenido %}
+
+
+

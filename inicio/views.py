@@ -76,6 +76,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 def inicio(request):
     return render(request, 'inicio/inicio.html')
 
+def contact(request):
+    return render(request, 'inicio/contact.html')
+
+def about(request):
+    return render(request, 'inicio/about.html')
+
 
 #def segunda_vista(request):
 #    return HttpResponse('<h1>Soy la segunda vista!</h1>')
@@ -342,24 +348,46 @@ def inicio(request):
 #    return render(request,'inicio/modificar_animal.html', {'formulario': formulario})
 
 
-class CrearTiburon(CreateView):
-    model = Tiburon
-    template_name = 'inicio/CBV/crear_tiburon_CBV.html'
-    fields =['tipo', 'habitat', 'tomaño', 'status', 'descripcion']
-    success_url = reverse_lazy('listar_tiburones')
+
+
+class CrearTiburon(CreateView): #####
+    model = Tiburon  ######
+    template_name = "inicio/CBV/crear_tiburon_CBV.html" ######
+    form_class = CrearTiburonFormulario #####
+    success_url = reverse_lazy('listar_tiburones') #####
+
+    def form_valid(self, form): #####
+        form.instance.avatar = self.request.FILES.get('avatar', None) ####
+        return super().form_valid(form) #######
+    
+
+
+
+#class CrearTiburon(CreateView):
+#    model = Tiburon
+#    template_name = 'inicio/CBV/crear_tiburon_CBV.html'
+#    fields =['tipo', 'habitat', 'tomaño', 'status', 'descripcion']
+#    success_url = reverse_lazy('listar_tiburones')
     
 
 class ListarTiburones(ListView):
     model = Tiburon
     template_name = "inicio/CBV/listar_tiburones_CBV.html"
     context_object_name = 'tiburones'
+ 
     
+class ModificarTiburon(LoginRequiredMixin, UpdateView): ####
+    model = Tiburon ####
+    template_name = "inicio/CBV/modificar_tiburon_CBV.html" ####
+    form_class = ModificarTiburonFormulario ####
+    success_url = reverse_lazy('listar_tiburones') ####
+ 
     
-class ModificarTiburon(UpdateView):
-    model = Tiburon
-    template_name = "inicio/CBV/modificar_tiburon_CBV.html"
-    fields =['tipo', 'habitat', 'tomaño', 'status', 'descripcion']
-    success_url = reverse_lazy('listar_tiburones')
+#class ModificarTiburon(UpdateView):
+#    model = Tiburon
+#    template_name = "inicio/CBV/modificar_tiburon_CBV.html"
+#    fields =['tipo', 'habitat', 'tomaño', 'status', 'descripcion']
+#   success_url = reverse_lazy('listar_tiburones')
     
 class EliminarTiburon(LoginRequiredMixin, DeleteView):
     model = Tiburon
@@ -371,12 +399,23 @@ class MostrarTiburon(DeleteView):
     template_name = "inicio/CBV/mostrar_tiburon_CBV.html"
 
 #=========================================================================  
-    
-class CrearBallena(CreateView):
-    model = Ballena
-    template_name = 'inicio/CBV/crear_ballena_CBV.html'
-    fields =['tipo', 'habitat', 'tomaño', 'status', 'descripcion']
-    success_url = reverse_lazy('listar_ballenas')
+class CrearBallena(CreateView): #####
+    model = Ballena  ######
+    template_name = "inicio/CBV/crear_ballena_CBV.html" ######
+    form_class = CrearBallenaFormulario #####
+    success_url = reverse_lazy('listar_ballenas') #####
+
+    def form_valid(self, form): #####
+        form.instance.avatar = self.request.FILES.get('avatar', None) ####
+        return super().form_valid(form) #######
+
+
+  
+#class CrearBallena(CreateView):
+#    model = Ballena
+#   template_name = 'inicio/CBV/crear_ballena_CBV.html'
+#    fields =['tipo', 'habitat', 'tomaño', 'status', 'descripcion']
+#    success_url = reverse_lazy('listar_ballenas')
     
 
 class ListarBallenas(ListView):
@@ -384,12 +423,18 @@ class ListarBallenas(ListView):
     template_name = "inicio/CBV/listar_ballenas_CBV.html"
     context_object_name = 'ballenas'
     
+
+class ModificarBallena(LoginRequiredMixin, UpdateView): ####
+    model = Ballena ####
+    template_name = "inicio/CBV/modificar_ballena_CBV.html" ####
+    form_class = ModificarBallenaFormulario ####
+    success_url = reverse_lazy('listar_ballenas') ####   
     
-class ModificarBallena(UpdateView):
-    model = Ballena
-    template_name = "inicio/CBV/modificar_ballena_CBV.html"
-    fields =['tipo', 'habitat', 'tomaño', 'status', 'descripcion']
-    success_url = reverse_lazy('listar_ballenas')
+#class ModificarBallena(UpdateView):
+#    model = Ballena
+#    template_name = "inicio/CBV/modificar_ballena_CBV.html"
+#    fields =['tipo', 'habitat', 'tomaño', 'status', 'descripcion']
+#    success_url = reverse_lazy('listar_ballenas')
     
 class EliminarBallena(LoginRequiredMixin, DeleteView):
     model = Ballena
@@ -401,11 +446,25 @@ class MostrarBallena(DeleteView):
     template_name = "inicio/CBV/mostrar_ballena_CBV.html"
 
 #==========================================================================
-class CrearAnimal(CreateView):
-    model = Animal
-    template_name = 'inicio/CBV/crear_animal_CBV.html'
-    fields =['nombre', 'orden', 'habitat', 'tomaño', 'descripcion']
-    success_url = reverse_lazy('listar_animales')
+class CrearAnimal(CreateView): #####
+    model = Animal  ######
+    template_name = "inicio/CBV/crear_animal_CBV.html" ######
+    form_class = CrearAnimalFormulario #####
+    success_url = reverse_lazy('listar_animales') #####
+
+    def form_valid(self, form): #####
+        form.instance.avatar = self.request.FILES.get('avatar', None) ####
+        return super().form_valid(form) #######
+
+
+
+
+
+#class CrearAnimal(CreateView):
+#    model = Animal
+#    template_name = 'inicio/CBV/crear_animal_CBV.html'
+#    fields =['nombre', 'orden', 'habitat', 'tomaño', 'descripcion']
+#    success_url = reverse_lazy('listar_animales')
     
 
 class ListarAnimales(ListView):
@@ -413,12 +472,18 @@ class ListarAnimales(ListView):
     template_name = "inicio/CBV/listar_animales_CBV.html"
     context_object_name = 'animales'
     
+class ModificarAnimal(LoginRequiredMixin, UpdateView): ####
+    model = Animal ####
+    template_name = "inicio/CBV/modificar_animal_CBV.html" ####
+    form_class = ModificarAnimalFormulario ####
+    success_url = reverse_lazy('listar_animales') #### 
     
-class ModificarAnimal(UpdateView):
-    model = Animal
-    template_name = "inicio/CBV/modificar_animal_CBV.html"
-    fields =['nombre', 'orden', 'habitat', 'tomaño', 'descripcion']
-    success_url = reverse_lazy('listar_animales')
+       
+#class ModificarAnimal(UpdateView):
+#    model = Animal
+#    template_name = "inicio/CBV/modificar_animal_CBV.html"
+#    fields =['nombre', 'orden', 'habitat', 'tomaño', 'descripcion']
+#    success_url = reverse_lazy('listar_animales')
     
 class EliminarAnimal(LoginRequiredMixin, DeleteView):
     model = Animal
